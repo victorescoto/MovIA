@@ -1,8 +1,8 @@
 <?php
 
+use App\Http\Request;
 use App\Kernel;
 use Symfony\Component\ErrorHandler\Debug;
-use Symfony\Component\HttpFoundation\Request;
 
 require dirname(__DIR__).'/config/bootstrap.php';
 
