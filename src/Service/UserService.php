@@ -15,9 +15,14 @@ class UserService
         $this->repository = $repository;
     }
 
-    public function getUsers()
+    public function getUsers(): array
     {
         return $this->repository->findAll();
+    }
+
+    public function getUser(int $id): User
+    {
+        return $this->repository->find($id);
     }
 
     public function createUser(Request $request): User

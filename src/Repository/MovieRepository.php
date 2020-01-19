@@ -15,6 +15,8 @@ use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
  */
 class MovieRepository extends ServiceEntityRepository
 {
+    use RepositoryUtils;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Movie::class);

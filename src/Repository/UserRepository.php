@@ -17,6 +17,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
 {
+    use RepositoryUtils;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, User::class);
@@ -34,22 +36,5 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $user->setPassword($newEncodedPassword);
         $this->_em->persist($user);
         $this->_em->flush();
-    }
-
-    public function save(User $user): User
-    {
-        $em = $this->getEntityManager();
-
-        $em->persist($user);
-        $em->flush();
-
-        return $user;
-    }
-
-    public function delete(User $user): void
-    {
-        $em = $this->getEntityManager();
-        $em->remove($user);
-        $em->flush();
     }
 }

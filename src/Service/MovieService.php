@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\Movie;
 use App\Repository\MovieRepository;
 
 class MovieService
@@ -21,5 +22,15 @@ class MovieService
     public function saveMovies(array $movies)
     {
         $this->repository->saveBatch($movies);
+    }
+
+    /**
+     * @param $movies App\Entity\Movie[]
+     *
+     * @return App\Entity\Movie[]
+     */
+    public function getMovie(int $id): Movie
+    {
+        return $this->repository->find($id);
     }
 }
