@@ -34,3 +34,12 @@ services:
         arguments:
             $client: '@GuzzleHttp\Client'
             $apiKey: "%env(resolve:IMDB_API_KEY)%"
+
+
+    App\Service\RabbitMQService:
+        arguments:
+            $host: "%env(resolve:CLOUD_AMPQ_HOST)%"
+            $port: "%env(resolve:CLOUD_AMPQ_PORT)%"
+            $user: "%env(resolve:CLOUD_AMPQ_USERNAME)%"
+            $vhost: "%env(resolve:CLOUD_AMPQ_VHOST)%"
+            $password: "%env(resolve:CLOUD_AMPQ_PASSWORD)%"

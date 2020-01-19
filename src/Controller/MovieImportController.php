@@ -3,10 +3,8 @@
 namespace App\Controller;
 
 use ApiPlatform\Core\Bridge\Symfony\Validator\Exception\ValidationException;
-use App\Exception\IMDBException;
 use App\Http\Request;
-use App\Service\IMDBService;
-use App\Service\MovieService;
+use App\Service\RabbitMQService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -15,13 +13,11 @@ use Throwable;
 
 class MovieImportController extends AbstractController
 {
-    private $imdbService;
-    private $movieService;
+    private $rabbitMQService;
 
-    public function __construct(IMDBService $imdbService, MovieService $movieService)
+    public function __construct(RabbitMQService $rabbitMQService)
     {
-        $this->imdbService = $imdbService;
-        $this->movieService = $movieService;
+        $this->rabbitMQService = $rabbitMQService;
     }
 
     /**
@@ -41,12 +37,12 @@ class MovieImportController extends AbstractController
                 throw new ValidationException($errors);
             }
 
-            $movies = $this->imdbService->searchMovies($title);
-            $this->movieService->saveMovies($movies);
+            $this->rabbitMQService->dispatchMessage([
+                'action' => 'import-movies',
+                'payload' => compact('title')
+            ]);
 
-            return $this->json(['message' => 'Movies imported successfully']);
-        } catch (IMDBException | ValidationException $e) {
-            return $this->json(['message' => $e->getMessage()], 400);
+            return $this->json(['message' => 'Importing movies.'], 202);
         } catch (Throwable $t) {
             return $this->json(['message' => 'Something went wrong, please try again in a moment.'], 500);
         }
