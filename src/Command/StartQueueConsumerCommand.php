@@ -91,9 +91,13 @@ class StartQueueConsumerCommand extends Command
             $movies = $this->imdbService->searchMovies($title);
             $this->movieService->saveMovies($movies);
 
-            $this->logger->info("{$messageId} - Movies imported successfully");
+            $this->logger->info("{$messageId} - Movies imported successfully", compact('data', 'messageId'));
         } catch (Throwable $t) {
-            $this->logger->error("{$messageId} - {$t->getMessage()}");
+            $this->logger->error("{$messageId} - {$t->getMessage()}", [
+                'messageId' => $messageId,
+                'data' => $data,
+                'trace' => $t->getTrace(),
+            ]);
         }
     }
 }
