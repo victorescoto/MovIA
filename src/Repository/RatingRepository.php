@@ -20,4 +20,14 @@ class RatingRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Rating::class);
     }
+
+    public function getTopRated(int $limit = 5): array
+    {
+        return array_slice($this->getEntityManager()->createQuery(
+            'SELECT IDENTITY(r.movie) as movie_id, avg(r.rate) as rate_avg '
+                . 'FROM App\Entity\Rating r '
+                . 'GROUP BY r.movie '
+                . 'ORDER BY rate_avg '
+        )->getResult(), 0, $limit);
+    }
 }

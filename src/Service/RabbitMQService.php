@@ -12,7 +12,7 @@ class RabbitMQService extends AMQPStreamConnection
         return false;
     }
 
-    public function dispatchMessage(array $data, string $queue = 'movia')
+    public function dispatchMessage(array $data, string $queue = 'movia'): void
     {
         $this->connect();
 
@@ -32,7 +32,7 @@ class RabbitMQService extends AMQPStreamConnection
         $this->close();
     }
 
-    public function watch(callable $callback, string $queue = 'movia')
+    public function watch(callable $callback, string $queue = 'movia'): void
     {
         $this->connect();
 
@@ -52,7 +52,7 @@ class RabbitMQService extends AMQPStreamConnection
         $this->close();
     }
 
-    public function log(string $message, string $logLevel, string $messageId)
+    public function log(string $message, string $logLevel, string $messageId): void
     {
         $this->dispatchMessage([
             'messageId' => $messageId,

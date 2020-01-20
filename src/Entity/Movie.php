@@ -158,4 +158,17 @@ class Movie
 
         return $this;
     }
+
+    /**
+     * @Groups("movie.detail")
+     */
+    public function getRateAvg(): float
+    {
+        $rateQty = count($this->ratings);
+        $rateSum = array_sum($this->ratings->map(function ($rating) {
+            return $rating->getRate();
+        })->toArray());
+
+        return $rateSum / $rateQty;
+    }
 }

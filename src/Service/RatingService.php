@@ -74,4 +74,9 @@ class RatingService
     {
         $this->repository->delete($rating);
     }
+
+    public function getTopRated(int $limit = 5): array
+    {
+        return $this->repository->getTopRated($limit);
+    }
 }

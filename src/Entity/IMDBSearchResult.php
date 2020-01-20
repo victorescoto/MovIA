@@ -20,7 +20,7 @@ class IMDBSearchResult implements ApiSearchResultsInterface
         $this->removeDuplicatedMovies();
     }
 
-    protected function removeDuplicatedMovies()
+    protected function removeDuplicatedMovies(): void
     {
         $filteredMovies = [];
         $imdbIds = [];

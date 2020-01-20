@@ -20,7 +20,7 @@ class MovieService
      *
      * @return App\Entity\Movie[]
      */
-    public function saveMovies(array $movies)
+    public function saveMovies(array $movies): void
     {
         $this->repository->saveBatch($movies);
     }
