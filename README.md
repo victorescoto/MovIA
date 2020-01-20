@@ -46,7 +46,7 @@ $ docker-compose run --rm app php bin/console doctrine:fixtures:load
 
 App Route list
 
-|------------------------------|----------|--------------------------|
+
 | Name                         | Method   | Path                     |
 |------------------------------|----------|--------------------------|
 | app_movie_list               | GET      | /api/movies              |
