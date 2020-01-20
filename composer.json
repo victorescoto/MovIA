@@ -1,5 +1,7 @@
 {
+    "name": "srvemespeu/movia",
     "type": "project",
+    "description": "Never again be in doubt about which movie to watch next, just ask MovIA and get excellent recommendations. :)",
     "license": "proprietary",
     "require": {
         "php": "^7.2.5",

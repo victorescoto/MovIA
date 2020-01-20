@@ -59,13 +59,7 @@ class RatingService
 
     public function updateRating(Request $request, Rating $rating): Rating
     {
-        $user = $this->userService->getUser($request->json->get('user'));
-        $movie = $this->movieService->getMovie($request->json->get('movie'));
-
-        $rating
-            ->setRate($request->json->get('rate'))
-            ->setUser($user)
-            ->setMovie($movie);
+        $rating->setRate($request->json->get('rate'));
 
         return $this->repository->save($rating);
     }

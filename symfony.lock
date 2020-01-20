@@ -147,7 +147,7 @@
         "version": "2.2.3"
     },
     "php": {
-        "version": "7.2"
+        "version": "7.4"
     },
     "php-amqplib/php-amqplib": {
         "version": "v2.11.0"

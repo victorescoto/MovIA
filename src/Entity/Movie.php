@@ -169,6 +169,6 @@ class Movie
             return $rating->getRate();
         })->toArray());
 
-        return $rateSum / $rateQty;
+        return $rateQty > 0 ? $rateSum / $rateQty : 0;
     }
 }

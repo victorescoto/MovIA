@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+  app:
+    build:
+      context: .
+    volumes:
+      - ./:/var/www/html
+      - ./compose/:/etc/apache2/sites-available/
+    ports:
+      - "8000:80"
