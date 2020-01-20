@@ -44,7 +44,9 @@ $ docker-compose run --rm app php bin/console doctrine:fixtures:load
 
 **At this point the application is ready for use \o/**
 
-Route list
+App Route list
+
+|------------------------------|----------|--------------------------|
 | Name                         | Method   | Path                     |
 |------------------------------|----------|--------------------------|
 | app_movie_list               | GET      | /api/movies              |
