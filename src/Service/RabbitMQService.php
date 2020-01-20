@@ -38,10 +38,14 @@ class RabbitMQService extends AMQPStreamConnection
 
         $channel = $this->channel();
 
-        $channel->basic_consume($queue, '', false, true, false, false, $callback);
+        list(, $messageCount,) = $channel->queue_declare($queue, true);
 
-        while ($channel->is_consuming()) {
-            $channel->wait();
+        if ($messageCount) {
+            $channel->basic_consume($queue, '', false, true, false, false, $callback);
+
+            while ($channel->is_consuming()) {
+                $channel->wait();
+            }
         }
 
         $channel->close();

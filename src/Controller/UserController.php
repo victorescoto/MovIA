@@ -36,7 +36,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/api/users/{id}", methods={"GET"})
+     * @Route("/api/users/{id}", methods={"GET"}, requirements={"id":"\d+"})
      */
     public function show(User $user)
     {
@@ -44,7 +44,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/api/users/{id}", methods={"PUT"})
+     * @Route("/api/users/{id}", methods={"PUT"}, requirements={"id":"\d+"})
      */
     public function update(Request $request, User $user)
     {
@@ -53,7 +53,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/api/users/{id}", methods={"DELETE"})
+     * @Route("/api/users/{id}", methods={"DELETE"}, requirements={"id":"\d+"})
      */
     public function delete(User $user)
     {

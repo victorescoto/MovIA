@@ -36,7 +36,7 @@ class MovieController extends AbstractController
     }
 
     /**
-     * @Route("/api/movies/{id}", methods={"GET"})
+     * @Route("/api/movies/{id}", methods={"GET"}, requirements={"id":"\d+"})
      */
     public function show(Movie $movie)
     {
@@ -44,7 +44,7 @@ class MovieController extends AbstractController
     }
 
     /**
-     * @Route("/api/movies/{id}", methods={"PUT"})
+     * @Route("/api/movies/{id}", methods={"PUT"}, requirements={"id":"\d+"})
      */
     public function update(Request $request, Movie $movie)
     {
@@ -53,7 +53,7 @@ class MovieController extends AbstractController
     }
 
     /**
-     * @Route("/api/movies/{id}", methods={"DELETE"})
+     * @Route("/api/movies/{id}", methods={"DELETE"}, requirements={"id":"\d+"})
      */
     public function delete(Movie $movie)
     {

@@ -53,7 +53,7 @@ class RatingController extends AbstractController
     }
 
     /**
-     * @Route("/api/ratings/{id}", methods={"GET"})
+     * @Route("/api/ratings/{id}", methods={"GET"}, requirements={"id":"\d+"})
      */
     public function show(Rating $rating)
     {
@@ -67,7 +67,7 @@ class RatingController extends AbstractController
     }
 
     /**
-     * @Route("/api/ratings/{id}", methods={"PUT"})
+     * @Route("/api/ratings/{id}", methods={"PUT"}, requirements={"id":"\d+"})
      */
     public function update(Request $request, Rating $rating)
     {
@@ -82,7 +82,7 @@ class RatingController extends AbstractController
     }
 
     /**
-     * @Route("/api/ratings/{id}", methods={"DELETE"})
+     * @Route("/api/ratings/{id}", methods={"DELETE"}, requirements={"id":"\d+"})
      */
     public function delete(Rating $rating)
     {
@@ -97,7 +97,7 @@ class RatingController extends AbstractController
     }
 
     /**
-     * @Route("/api/movies/{id}/ratings", methods={"GET"})
+     * @Route("/api/movies/{id}/ratings", methods={"GET"}, requirements={"id":"\d+"})
      */
     public function listByMovie(Movie $movie)
     {
@@ -111,7 +111,7 @@ class RatingController extends AbstractController
     }
 
     /**
-     * @Route("/api/users/{id}/ratings", methods={"GET"})
+     * @Route("/api/users/{id}/ratings", methods={"GET"}, requirements={"id":"\d+"})
      */
     public function listByUser(User $user)
     {
