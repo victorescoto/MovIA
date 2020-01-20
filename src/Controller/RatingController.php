@@ -6,6 +6,7 @@ use App\Entity\Movie;
 use App\Entity\Rating;
 use App\Entity\User;
 use App\Http\Request;
+use App\Service\RabbitMQService;
 use App\Service\RatingService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,10 +14,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class RatingController extends AbstractController
 {
     protected $ratingService;
+    protected $rabbitMQService;
 
-    public function __construct(RatingService $ratingService)
+    public function __construct(RatingService $ratingService, RabbitMQService $rabbitMQService)
     {
         $this->ratingService = $ratingService;
+        $this->rabbitMQService = $rabbitMQService;
     }
 
     /**
@@ -79,5 +82,14 @@ class RatingController extends AbstractController
     {
         $ratings = $this->ratingService->getRatingsByUser($user);
         return $this->json($ratings);
+    }
+
+    /**
+     * @Route("/api/ratings/random", methods={"POST"})
+     */
+    public function randomRatings()
+    {
+        $this->rabbitMQService->dispatchMessage(['action' => 'generate-ratings']);
+        return $this->json(['message' => 'Random ratings are being generated.'], 202);
     }
 }

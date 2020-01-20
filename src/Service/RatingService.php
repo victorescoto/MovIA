@@ -39,6 +39,11 @@ class RatingService
         return $this->repository->findAllByUser($user);
     }
 
+    public function getRatingByUserAndMovie(User $user, Movie $movie): ?Rating
+    {
+        return $this->repository->findOneBy(compact('user', 'movie'));
+    }
+
     public function createRating(Request $request): Rating
     {
         $user = $this->userService->getUser($request->json->get('user'));

@@ -3,9 +3,13 @@
 namespace App\Command;
 
 use ApiPlatform\Core\Bridge\Symfony\Validator\Exception\ValidationException;
+use App\Entity\Rating;
+use App\Repository\RatingRepository;
 use App\Service\IMDBService;
 use App\Service\MovieService;
 use App\Service\RabbitMQService;
+use App\Service\RatingService;
+use App\Service\UserService;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -18,24 +22,33 @@ use Throwable;
 class StartQueueConsumerCommand extends Command
 {
     protected static $defaultName = 'app:start-queue-consumer';
-    protected $movieService;
     protected $imdbService;
-    protected $rabbitMQService;
-    protected $validator;
     protected $logger;
+    protected $movieService;
+    protected $rabbitMQService;
+    protected $ratingRepository;
+    protected $ratingService;
+    protected $userService;
+    protected $validator;
 
     public function __construct(
-        MovieService $movieService,
         IMDBService $imdbService,
+        LoggerInterface $logger,
+        MovieService $movieService,
         RabbitMQService $rabbitMQService,
-        ValidatorInterface $validator,
-        LoggerInterface $logger
+        RatingRepository $ratingRepository,
+        RatingService $ratingService,
+        UserService $userService,
+        ValidatorInterface $validator
     ) {
-        $this->movieService = $movieService;
         $this->imdbService = $imdbService;
-        $this->rabbitMQService = $rabbitMQService;
-        $this->validator = $validator;
         $this->logger = $logger;
+        $this->movieService = $movieService;
+        $this->rabbitMQService = $rabbitMQService;
+        $this->ratingRepository = $ratingRepository;
+        $this->ratingService = $ratingService;
+        $this->userService = $userService;
+        $this->validator = $validator;
 
         parent::__construct();
     }
@@ -55,12 +68,16 @@ class StartQueueConsumerCommand extends Command
 
             $io->horizontalTable(
                 ['message', 'payload'],
-                [[$messageInfo['action'], json_encode($messageInfo['payload'])]]
+                [[$messageInfo['action'], json_encode($messageInfo['payload'] ?? '')]]
             );
 
             switch ($messageInfo['action'] ?? '') {
                 case 'import-movies':
                     $this->importMovies($messageInfo['payload'], $messageInfo['identifier']);
+                    break;
+
+                case 'generate-ratings':
+                    $this->generateRatings($messageInfo['identifier']);
                     break;
 
                 default:
@@ -99,5 +116,29 @@ class StartQueueConsumerCommand extends Command
                 'trace' => $t->getTrace(),
             ]);
         }
+    }
+
+    protected function generateRatings(string $messageId): void
+    {
+        $users = $this->userService->getUsers();
+        $movies = $this->movieService->getMovies();
+
+        foreach ($users as $user) {
+            foreach ($movies as $movie) {
+                $rating = $this->ratingService->getRatingByUserAndMovie($user, $movie);
+
+                if (is_null($rating)) {
+                    $rating = (new Rating)
+                        ->setUser($user)
+                        ->setMovie($movie);
+                }
+
+                $rating->setRate(rand(1, 5));
+
+                $this->ratingRepository->save($rating);
+            }
+        }
+
+        $this->logger->info("{$messageId} - Random ratings generated successfully.", compact('messageId'));
     }
 }
