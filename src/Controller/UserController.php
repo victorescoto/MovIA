@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class UserController extends AbstractController
 {
-    private $userService;
+    protected $userService;
 
     public function __construct(UserService $userService)
     {

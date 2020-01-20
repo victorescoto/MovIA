@@ -9,7 +9,7 @@ use App\Repository\IMDBRepository;
 
 class IMDBService implements ApiServiceInterface
 {
-    private $repository;
+    protected $repository;
 
     public function __construct(IMDBRepository $repository)
     {

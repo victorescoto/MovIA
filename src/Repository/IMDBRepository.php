@@ -8,8 +8,8 @@ use GuzzleHttp\ClientInterface;
 
 class IMDBRepository
 {
-    private $client;
-    private $apiKey;
+    protected $client;
+    protected $apiKey;
 
     public function __construct(ClientInterface $client, string $apiKey)
     {

@@ -13,7 +13,7 @@ use Throwable;
 
 class MovieImportController extends AbstractController
 {
-    private $rabbitMQService;
+    protected $rabbitMQService;
 
     public function __construct(RabbitMQService $rabbitMQService)
     {

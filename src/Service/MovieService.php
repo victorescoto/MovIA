@@ -8,7 +8,7 @@ use App\Repository\MovieRepository;
 
 class MovieService
 {
-    private $repository;
+    protected $repository;
 
     public function __construct(MovieRepository $repository)
     {

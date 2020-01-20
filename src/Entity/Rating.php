@@ -14,24 +14,24 @@ class Rating
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $rate;
+    protected $rate;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Movie", inversedBy="ratings")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $movie;
+    protected $movie;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="ratings")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $user;
+    protected $user;
 
     public function getId(): ?int
     {

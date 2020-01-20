@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class RatingController extends AbstractController
 {
-    private $ratingService;
+    protected $ratingService;
 
     public function __construct(RatingService $ratingService)
     {

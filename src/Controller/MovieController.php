@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class MovieController extends AbstractController
 {
-    private $movieService;
+    protected $movieService;
 
     public function __construct(MovieService $movieService)
     {

@@ -16,37 +16,37 @@ class Movie
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $title;
+    protected $title;
 
     /**
      * @ORM\Column(type="smallint")
      */
-    private $year;
+    protected $year;
 
     /**
      * @ORM\Column(type="string", length=9, unique=true)
      */
-    private $imdbId;
+    protected $imdbId;
 
     /**
      * @ORM\Column(type="string", length=20)
      */
-    private $type;
+    protected $type;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $poster;
+    protected $poster;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Rating", mappedBy="movie", orphanRemoval=true)
      */
-    private $ratings;
+    protected $ratings;
 
     public function __construct()
     {
