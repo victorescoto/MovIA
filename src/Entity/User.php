@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -16,16 +17,19 @@ class User implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"user.list", "user.detail"})
      */
     protected $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Groups({"user.list", "user.detail"})
      */
     protected $email;
 
     /**
      * @ORM\Column(type="json")
+     * @Groups("user.detail")
      */
     protected $roles = [];
 
@@ -37,6 +41,7 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Rating", mappedBy="user", orphanRemoval=true)
+     * @Groups("user.ratings")
      */
     protected $ratings;
 

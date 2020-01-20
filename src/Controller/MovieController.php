@@ -23,7 +23,7 @@ class MovieController extends AbstractController
     public function list()
     {
         $movies = $this->movieService->getMovies();
-        return $this->json($movies);
+        return $this->json($movies, 200, [], ['groups' => 'movie.list']);
     }
 
     /**
@@ -32,7 +32,7 @@ class MovieController extends AbstractController
     public function create(Request $request)
     {
         $movie = $this->movieService->createMovie($request);
-        return $this->json($movie, 201);
+        return $this->json($movie, 201, [], ['groups' => 'movie.detail']);
     }
 
     /**
@@ -40,7 +40,7 @@ class MovieController extends AbstractController
      */
     public function show(Movie $movie)
     {
-        return $this->json($movie);
+        return $this->json($movie, 200, [], ['groups' => 'movie.detail']);
     }
 
     /**
@@ -49,7 +49,7 @@ class MovieController extends AbstractController
     public function update(Request $request, Movie $movie)
     {
         $movie = $this->movieService->updateMovie($request, $movie);
-        return $this->json($movie);
+        return $this->json($movie, 200, [], ['groups' => 'movie.detail']);
     }
 
     /**
@@ -58,6 +58,6 @@ class MovieController extends AbstractController
     public function delete(Movie $movie)
     {
         $this->movieService->deleteMovie($movie);
-        return $this->json($movie);
+        return $this->json($movie, 200, [], ['groups' => 'movie.detail']);
     }
 }

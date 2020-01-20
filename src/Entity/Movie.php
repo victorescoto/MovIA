@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\MovieRepository")
@@ -15,36 +16,43 @@ class Movie
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"movie.list", "movie.detail"})
      */
     protected $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"movie.list", "movie.detail"})
      */
     protected $title;
 
     /**
      * @ORM\Column(type="smallint")
+     * @Groups({"movie.list", "movie.detail"})
      */
     protected $year;
 
     /**
      * @ORM\Column(type="string", length=9, unique=true)
+     * @Groups({"movie.list", "movie.detail"})
      */
     protected $imdbId;
 
     /**
      * @ORM\Column(type="string", length=20)
+     * @Groups("movie.detail")
      */
     protected $type;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups("movie.detail")
      */
     protected $poster;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Rating", mappedBy="movie", orphanRemoval=true)
+     * @Groups("movie.ratings")
      */
     protected $ratings;
 

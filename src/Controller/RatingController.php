@@ -28,7 +28,13 @@ class RatingController extends AbstractController
     public function list()
     {
         $ratings = $this->ratingService->getRatings();
-        return $this->json($ratings);
+        return $this->json($ratings, 200, [], [
+            'groups' => [
+                'rating.list',
+                'user.list',
+                'movie.list',
+            ]
+        ]);
     }
 
     /**
@@ -37,7 +43,13 @@ class RatingController extends AbstractController
     public function create(Request $request)
     {
         $rating = $this->ratingService->createRating($request);
-        return $this->json($rating, 201);
+        return $this->json($rating, 201, [], [
+            'groups' => [
+                'rating.list',
+                'user.list',
+                'movie.list',
+            ]
+        ]);
     }
 
     /**
@@ -45,7 +57,13 @@ class RatingController extends AbstractController
      */
     public function show(Rating $rating)
     {
-        return $this->json($rating);
+        return $this->json($rating, 200, [], [
+            'groups' => [
+                'rating.list',
+                'user.list',
+                'movie.list',
+            ]
+        ]);
     }
 
     /**
@@ -54,7 +72,13 @@ class RatingController extends AbstractController
     public function update(Request $request, Rating $rating)
     {
         $rating = $this->ratingService->updateRating($request, $rating);
-        return $this->json($rating);
+        return $this->json($rating, 200, [], [
+            'groups' => [
+                'rating.list',
+                'user.list',
+                'movie.list',
+            ]
+        ]);
     }
 
     /**
@@ -63,7 +87,13 @@ class RatingController extends AbstractController
     public function delete(Rating $rating)
     {
         $this->ratingService->deleteRating($rating);
-        return $this->json($rating);
+        return $this->json($rating, 200, [], [
+            'groups' => [
+                'rating.list',
+                'user.list',
+                'movie.list',
+            ]
+        ]);
     }
 
     /**
@@ -72,7 +102,12 @@ class RatingController extends AbstractController
     public function listByMovie(Movie $movie)
     {
         $ratings = $this->ratingService->getRatingsByMovie($movie);
-        return $this->json($ratings);
+        return $this->json($ratings, 200, [], [
+            'groups' => [
+                'rating.list',
+                'user.list',
+            ]
+        ]);
     }
 
     /**
@@ -81,7 +116,12 @@ class RatingController extends AbstractController
     public function listByUser(User $user)
     {
         $ratings = $this->ratingService->getRatingsByUser($user);
-        return $this->json($ratings);
+        return $this->json($ratings, 200, [], [
+            'groups' => [
+                'rating.list',
+                'movie.list',
+            ]
+        ]);
     }
 
     /**

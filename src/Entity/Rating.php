@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\RatingRepository")
@@ -13,23 +14,27 @@ class Rating
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups("rating.list")
      */
     protected $id;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups("rating.list")
      */
     protected $rate;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Movie", inversedBy="ratings")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups("movie.list")
      */
     protected $movie;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="ratings")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups("user.list")
      */
     protected $user;
 

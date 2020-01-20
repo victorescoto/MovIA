@@ -31,12 +31,12 @@ class RatingService
 
     public function getRatingsByMovie(Movie $movie): array
     {
-        return $this->repository->findAllByMovie($movie);
+        return $this->repository->findByMovie($movie);
     }
 
     public function getRatingsByUser(User $user): array
     {
-        return $this->repository->findAllByUser($user);
+        return $this->repository->findByUser($user);
     }
 
     public function getRatingByUserAndMovie(User $user, Movie $movie): ?Rating
