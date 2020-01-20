@@ -18,7 +18,7 @@ class RabbitMQService extends AMQPStreamConnection
 
         $channel = $this->channel();
 
-        $channel->queue_declare($queue, false, false, false, false);
+        $channel->queue_declare($queue, false, true, false, false);
 
         $data['identifier'] = md5(date('YmdHis'));
         $message = new AMQPMessage(json_encode($data), [
@@ -38,7 +38,7 @@ class RabbitMQService extends AMQPStreamConnection
 
         $channel = $this->channel();
 
-        $channel->basic_consume($queue, '', false, false, false, false, $callback);
+        $channel->basic_consume($queue, '', false, true, false, false, $callback);
 
         while ($channel->is_consuming()) {
             $channel->wait();
